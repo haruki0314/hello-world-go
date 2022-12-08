@@ -2,9 +2,9 @@ package main
 
 
 import (
-	"time"
+	// "time"
 	"fmt"
-	"os"
+	// "os"
 )
 
 
@@ -41,17 +41,26 @@ import (
 // }
 
 
-func TestDefer(){
-	defer fmt.Println("end")
-	fmt.Println("start")
-}
+// func TestDefer(){
+// 	defer fmt.Println("end")
+// 	fmt.Println("start")
+// }
 
-func sub(){
-	for{
-		fmt.Println("Sub Loop")
-		time.Sleep(100*time.Millisecond)
-	}
-}
+// func sub(){
+// 	for{
+// 		fmt.Println("Sub Loop")
+// 		time.Sleep(100*time.Millisecond)
+// 	}
+// }
+
+// func Sum(s ...int) int{
+// 	a:=0
+// 	for _,v := range s{
+// 		fmt.Println(a)
+// 		a += v
+// 	}
+// 	return a
+// }
 
 func main(){
 	// var x12 interface{} = 3
@@ -182,24 +191,68 @@ func main(){
 	// 		break Loop
 	// 	}
 	// }
-	go sub()
-	for{
-		fmt.Println("Main Loop")
-		time.Sleep(200*time.Millisecond)
-	}
-	TestDefer()
+	// go sub()
+	// for{
+	// 	fmt.Println("Main Loop")
+	// 	time.Sleep(200*time.Millisecond)
+	// }
+	// TestDefer()
 
-	defer func(){
-		fmt.Println("1")
-		fmt.Println("2")
-		fmt.Println("3")
-	}()
+	// defer func(){
+	// 	fmt.Println("1")
+	// 	fmt.Println("2")
+	// 	fmt.Println("3")
+	// }()
 
-	file,err := os.Create("test.txt")
-	if err != nil{
-		fmt.Println(err)
-	}
-	defer file.Close()
+	// file,err := os.Create("test.txt")
+	// if err != nil{
+	// 	fmt.Println(err)
+	// }
+	// defer file.Close()
 	
-	file.Write([]byte("Hello"))
+	// file.Write([]byte("Hello"))
+
+	// sl5:= []int{1,2,3,4,5}
+	// fmt.Println(sl5)
+
+	// sl2 := sl5
+	// sl2 [0] = 1000
+	// fmt.Println(sl2)
+	// //元のアドレスにも1000がコピーされる
+
+	// sl6 := []int{1,2,3,4,5}
+	// sl3 := make([]int,5,10)
+	// fmt.Println(sl6)
+
+	// n := copy(sl3,sl6)
+
+	// fmt.Println(n,sl3)
+
+	// sl := []string{"A","B","C"}
+	// fmt.Println(sl)
+
+	// for _, v:= range sl{
+	// 	fmt.Println(v,sl)
+	// }
+
+	// fmt.Println(Sum(1,2,3))
+
+	m := map[int]string{
+		1:"A",
+		2:"B",
+	}
+	fmt.Println(m)
+
+	m[1] = "JAPAN"
+	m[2] = "USA"
+
+	fmt.Println(m[2])
+
+	s , ok:=m[5]
+	if !ok {fmt.Println("error")}
+	fmt.Println(s,ok)
+	
+	//mapから要素を削除
+	delete(m,1)
+	fmt.Println(m)
 }
