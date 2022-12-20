@@ -2,8 +2,9 @@ package main
 
 
 import (
-	// "time"
+	"time"
 	"fmt"
+
 	// "os"
 )
 
@@ -61,6 +62,21 @@ import (
 // 	}
 // 	return a
 // }
+
+// func Sum(s ...int) int{
+// 	n:=0
+// 	for _,v:=range s{
+// 		n+= v
+// 	}
+// 	return n
+// }
+
+func receiever(c chan int){
+	for{
+		i :=<-c
+		fmt.Println(i)
+	}
+}
 
 func main(){
 	// var x12 interface{} = 3
@@ -237,22 +253,97 @@ func main(){
 
 	// fmt.Println(Sum(1,2,3))
 
-	m := map[int]string{
-		1:"A",
-		2:"B",
-	}
-	fmt.Println(m)
+	// m := map[int]string{
+	// 	1:"A",
+	// 	2:"B",
+	// }
+	// fmt.Println(m)
 
-	m[1] = "JAPAN"
-	m[2] = "USA"
+	// m[1] = "JAPAN"
+	// m[2] = "USA"
 
-	fmt.Println(m[2])
+	// fmt.Println(m[2])
 
-	s , ok:=m[5]
-	if !ok {fmt.Println("error")}
-	fmt.Println(s,ok)
+	// s , ok:=m[5]
+	// if !ok {fmt.Println("error")}
+	// fmt.Println(s,ok)
 	
-	//mapから要素を削除
-	delete(m,1)
-	fmt.Println(m)
+	// //mapから要素を削除
+	// delete(m,1)
+	// fmt.Println(m)
+
+	// sl := []string{"A","B","C"}
+	// fmt.Println(sl)
+	
+	// 	for i := range sl{
+	// 		fmt.Println(sl[i])
+	// 	}
+
+	//スライス
+	//可変長引数
+
+	// fmt.Println(Sum(1,2,3))
+
+	// var m = map[string]int{"A":100,"B":200}
+	// fmt.Println(m)
+	// fmt.Println(m["A"]);
+
+	// m4:=make(map[int]string)
+	// m5 , ok:= m4[1]
+	// if !ok {
+	// 	fmt.Println("erro")
+	// }
+	// 	fmt.Println(ok,m5)
+	// fmt.Println(m4)
+
+	// m:= map[string]int{
+	// 	"Apple":100,
+	// 	"Banan":200,
+	// }
+	
+	// for k,v:=range m{
+	// 	fmt.Println(k,v)
+	// }
+	
+	// var ch1 chan int
+	
+	// ch1 = make(chan int)
+	// ch2 := make(chan int)
+
+	// fmt.Println(cap(ch1))
+	// fmt.Println(cap(ch2))
+
+	// ch3 := make(chan int,5)
+	// fmt.Println(cap(ch3))
+
+	// ch3 <- 1
+	// fmt.Println(len(ch3))
+
+	// ch3 <- 2
+	// ch3 <- 3
+	// fmt.Println(len(ch3))
+
+	// i := <-ch3
+	// fmt.Println(i)
+
+	// i2 := <-ch3
+	// fmt.Println(i2)
+	// fmt.Println("len",len(ch3))
+
+	ch1:= make(chan int)
+	ch2:= make(chan int)
+
+	go receiever(ch1)
+	go receiever(ch2)
+
+	i :=0
+
+	for i<100{
+		ch1<- i
+		ch2 <- i
+
+		time.Sleep(50*time.Millisecond)
+		i++
+	}
+	fmt.Println(<-ch1)
 }
