@@ -2,12 +2,46 @@ package main
 
 
 import (
-	"time"
+	// "time"
 	"fmt"
 
 	// "os"
 )
 
+// type T struct{
+// 	User User
+// }
+
+type User struct {
+	//構造体定義 
+	Name string
+	Age int
+	// X,Y int
+}
+type Users []*User
+//構造体のポインタ変数を返すコンストラクタ関数をgoではよく扱う
+func NewUser(/*引数*/name string,age int)/*ポインタ型の引数:*/ *User{
+	return &User{Name:name,Age:age}
+}
+
+// func updateUser2(user *User){
+// 	user.Name = "A"
+// 	user.Age = 1000
+// }
+
+// func (u User)SayName(){
+// 	fmt.Println(u.Name)
+// }
+
+
+// func (u User)SetName1(name string){
+// 	u.Name = name
+// }
+
+//基本的にメソッドに定義するレシーバはポインタ型にするべき
+// func (u *User)SetName2(name string){
+// 	u.Name = name
+// }
 
 // func Plus(x int,y int) int{
 // 	return x+y
@@ -71,12 +105,19 @@ import (
 // 	return n
 // }
 
-func receiever(c chan int){
-	for{
-		i :=<-c
-		fmt.Println(i)
-	}
+// func receiever(c chan int){
+// 	for{
+// 		i :=<-c
+// 		fmt.Println(i)
+// 	}
+// }
+
+func (u *User) SetName(){
+	u.Name = "A"
 }
+
+type MyInt int
+
 
 func main(){
 	// var x12 interface{} = 3
@@ -330,20 +371,89 @@ func main(){
 	// fmt.Println(i2)
 	// fmt.Println("len",len(ch3))
 
-	ch1:= make(chan int)
-	ch2:= make(chan int)
+	// ch1:= make(chan int)
+	// ch2:= make(chan int)
 
-	go receiever(ch1)
-	go receiever(ch2)
+	// go receiever(ch1)
+	// go receiever(ch2)
 
-	i :=0
+	// i :=0
 
-	for i<100{
-		ch1<- i
-		ch2 <- i
+	// for i<100{
+	// 	ch1<- i
+	// 	ch2 <- i
 
-		time.Sleep(50*time.Millisecond)
-		i++
+	// 	time.Sleep(50*time.Millisecond)
+	// 	i++
+	// }
+	// fmt.Println(<-ch1)
+
+	// user1 := User{Name:"user1"}
+	// user1.SayName()
+
+	// user2 := &User{Name:"user2"}
+	// user2.serName2("8"
+	// t := T{User:User{Name:"user1",Age:10}}
+	// fmt.Println(t)
+
+	// fmt.Println(t.User)
+	// fmt.Println(t.User.Name)
+
+	// t.User.SetName()
+	// fmt.Println(t)
+	// user1 := NewUser("user1",10)
+	// fmt.Println(user1)
+	// fmt.Println(*user1)
+
+	// users := Users{}
+/*user型のスライスを上で構造体として定義、スライスにuser型のオブジェクトを積んでいく*/
+	// user1 := User{Name:"user1",Age:10}
+	// user2 := User{Name:"user2",Age:20}
+	// user3 := User{Name:"user3",Age:30}
+	// user4 := User{Name:"user4",Age:40}
+
+	// users := Users{}
+
+	// users = append(users,&user1)
+	// users = append(users,&user2)
+	// users = append(users,&user3)
+	// users = append(users,&user4)
+
+/*for文で展開していく*/
+	// for _,u := range users{
+	// 	fmt.Println(*u)
+	// }
+	// fmt.Println(users)
+
+
+/*make関数でuser型のスライスを作成していく*/
+	// users2 := make([]*User,0)
+	// users2 = append(users2,&user1,&user2)
+
+	// for _,u := range users2{
+	// 	fmt.Println(*u)
+	// }
+
+	m:= map[int]User{
+		1:{Name:"user1",Age:10},
+		2:{Name:"user2",Age:20},
 	}
-	fmt.Println(<-ch1)
+	fmt.Println(m)
+
+	m2 := map[User]string{
+		{Name:"user1",Age:10}:"Tokyo",
+		{Name:"user2",Age:20}:"LA",
+	}
+	fmt.Println(m2)
+
+	m3 := make(map[int]User)
+	fmt.Println(m3)
+	m3[1] = User{Name: "user3"}
+	fmt.Println(m3)
+
+	for _,v := range m{
+		fmt.Println(v)
+	}
+
+
 }
