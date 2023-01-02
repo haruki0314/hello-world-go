@@ -12,17 +12,38 @@ import (
 // 	User User
 // }
 
-type User struct {
-	//構造体定義 
-	Name string
-	Age int
-	// X,Y int
-}
-type Users []*User
-//構造体のポインタ変数を返すコンストラクタ関数をgoではよく扱う
-func NewUser(/*引数*/name string,age int)/*ポインタ型の引数:*/ *User{
-	return &User{Name:name,Age:age}
-}
+// type User struct {
+// 	//構造体定義 
+// 	Name string
+// 	Age int
+// 	// X,Y int
+// }
+// type Users []*User
+// //構造体のポインタ変数を返すコンストラクタ関数をgoではよく扱う
+// func NewUser(/*引数*/name string,age int)/*ポインタ型の引数:*/ *User{
+// 	return &User{Name:name,Age:age}
+// }
+
+// type Person struct{
+// 	Name string
+// 	Age int
+// }
+
+// type Car struct{
+// 	Number string
+// 	Model string
+// }
+
+// func (p *Person) ToString() string{
+// 	 return fmt.Sprintf("Name=%v,Age=%v",p.Name,p.Age)
+// }
+// func(c *Car) ToString() string{
+// 	return fmt.Sprintf("Number=%v,Model=%v",c.Number,c.Model)
+// }
+
+// type Stringfy interface{
+// 	ToString() string
+// }
 
 // func updateUser2(user *User){
 // 	user.Name = "A"
@@ -112,11 +133,27 @@ func NewUser(/*引数*/name string,age int)/*ポインタ型の引数:*/ *User{
 // 	}
 // }
 
-func (u *User) SetName(){
-	u.Name = "A"
+// func (u *User) SetName(){
+// 	u.Name = "A"
+// }
+
+// type MyInt int
+
+type error interface{
+	Error()string
+}
+type MyError struct{
+	Message string
+	ErrCode int
 }
 
-type MyInt int
+func(e *MyError) Error() string{
+	return e.Message
+}
+
+func RaiseError() error{
+	return &MyError{Message:"カスタムエラーが発生しました。",ErrCode:1}
+}
 
 
 func main(){
@@ -434,26 +471,41 @@ func main(){
 	// 	fmt.Println(*u)
 	// }
 
-	m:= map[int]User{
-		1:{Name:"user1",Age:10},
-		2:{Name:"user2",Age:20},
-	}
-	fmt.Println(m)
+	// m:= map[int]User{
+	// 	1:{Name:"user1",Age:10},
+	// 	2:{Name:"user2",Age:20},
+	// }
+	// fmt.Println(m)
 
-	m2 := map[User]string{
-		{Name:"user1",Age:10}:"Tokyo",
-		{Name:"user2",Age:20}:"LA",
-	}
-	fmt.Println(m2)
+	// m2 := map[User]string{
+	// 	{Name:"user1",Age:10}:"Tokyo",
+	// 	{Name:"user2",Age:20}:"LA",
+	// }
+	// fmt.Println(m2)
 
-	m3 := make(map[int]User)
-	fmt.Println(m3)
-	m3[1] = User{Name: "user3"}
-	fmt.Println(m3)
+	// m3 := make(map[int]User)
+	// fmt.Println(m3)
+	// m3[1] = User{Name: "user3"}
+	// fmt.Println(m3)
 
-	for _,v := range m{
-		fmt.Println(v)
-	}
+	// for _,v := range m{
+	// 	fmt.Println(v)
+	// }
 
+		// vs := []Stringfy{
+		// 	&Person{Name:"Taro",Age:21},
+		// 	&Car{Number:"123-456",Model:"AB-1234"},
+		// }
 
+		// for _,v := range vs{
+		// 	fmt.Println(v.ToString())
+		// }
+
+			err := RaiseError()
+			fmt.Println(err.Error())
+
+			e,ok := err.(*MyError)
+			if ok{
+				fmt.Println(e.ErrCode)
+			}
 }
